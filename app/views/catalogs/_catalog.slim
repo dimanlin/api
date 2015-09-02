@@ -1,0 +1,9 @@
+.row.catalog
+  .col-xs-3
+    = link_to catalog.name, catalog_path(catalog)
+  .col-xs-6
+    = catalog.description
+  .col-xs-3
+    = link_to 'Edit', edit_catalog_path(catalog), class: 'btn btn-sm btn-default'
+    = link_to 'Show', catalog_path(catalog), class: 'btn btn-sm btn-default'
+    = link_to 'Delete', catalog_path(catalog), class: 'btn btn-sm btn-danger', confirm: "You are sure?", method: :delete
