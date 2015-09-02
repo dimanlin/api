@@ -3,15 +3,14 @@ class ApiV1::ProductsController < ApplicationController
   layout :false
 
   def index
-    @catalog = Catalog.find(params[:catalog_id])
-    @products = @catalog.products
+    catalog = Catalog.find(params[:catalog_id])
+    @products = catalog.products
   end
 
   def show
   end
 
   def update
-    @catalog = Catalog.find(params[:catalog_id])
     @product.update_attributes(product_params)
   end
 
@@ -20,8 +19,8 @@ class ApiV1::ProductsController < ApplicationController
   end
 
   def create
-    @catalog = Catalog.find(params[:catalog_id])
-    @product = @catalog.products.new(product_params)
+    catalog = Catalog.find(params[:catalog_id])
+    @product = catalog.products.new(product_params)
     @product.save
   end
 
