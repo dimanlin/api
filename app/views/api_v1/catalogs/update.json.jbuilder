@@ -1,3 +1,3 @@
-json.catalog @catalog do |catalog|
-  json.errors catalog.errors
+json.catalog do
+  json.partial! partial: 'catalog', locals: {catalog: @catalog}
 end

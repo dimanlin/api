@@ -15,17 +15,9 @@ class ApiV1::CatalogsController < ApplicationController
     @catalog.update_attributes(catalog_params)
   end
 
-  def new
-    @catalog = Catalog.new
-  end
-
   def create
     @catalog = Catalog.new(catalog_params)
-    if @catalog.save
-      redirect_to catalogs_path, notice: 'Success'
-    else
-      render :new
-    end
+    @catalog.save
   end
 
 
