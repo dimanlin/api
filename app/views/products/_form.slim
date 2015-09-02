@@ -1,0 +1,15 @@
+= form_for [product.catalog, product] do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+    p.text-danger
+      = product.errors.full_messages_for(:name).join(', ')
+
+  .form-group
+    = f.label :description
+    = f.text_area :description, class: 'form-control'
+    p.text-danger
+      = product.errors.full_messages_for(:description).join(', ')
+
+  = f.submit "#{product.new_record? ? 'Create' : 'Update'}", class: 'btn btn-sm btn-primary'
+
