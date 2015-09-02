@@ -1,6 +1,6 @@
 .row.catalog
   .col-xs-3
-    = link_to catalog.name, catalog_path(catalog)
+    = link_to catalog.name, catalog_products_path(catalog_id: catalog.id)
   .col-xs-6
     = catalog.description
   .col-xs-3

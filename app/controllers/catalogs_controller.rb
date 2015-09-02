@@ -6,10 +6,10 @@ class CatalogsController < ApplicationController
     @catalogs = Catalog.all
   end
 
-  def show
+  def edit
   end
 
-  def edit
+  def show
   end
 
   def destroy

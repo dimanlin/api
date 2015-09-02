@@ -3,3 +3,5 @@ h1
   = @catalog.name
 
 = render partial: 'product', collection: @products
+
+= link_to 'Add new product', new_catalog_product_path(catalog_id: @catalog.id), class: 'btn btn-sm btn-primary'

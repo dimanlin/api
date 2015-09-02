@@ -1,4 +1,12 @@
 h1
-  | Show catalog
+  ' Catalog
 
-= render partial: 'product', collection: @catalog.products
+
+.row
+  .col-xs-12
+    = label_tag :name
+    p
+      = @catalog.name
+    = label_tag :description
+    p
+      = @catalog.description

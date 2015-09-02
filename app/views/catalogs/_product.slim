@@ -1,9 +1,0 @@
-.row.product
-  .col-xs-3
-    = link_to product.name, catalog_product_path(catalog_id: product.catalog.id, id: product.id)
-  .col-xs-6
-    = product.description
-  .col-xs-3
-    = link_to 'Edit', edit_catalog_product_path(catalog_id: product.catalog.id, id: product.id), class: 'btn btn-sm btn-default'
-    = link_to 'Show', catalog_product_path(catalog_id: product.catalog.id, id: product.id), class: 'btn btn-sm btn-default'
-    = link_to 'Delete', catalog_product_path(catalog_id: product.catalog.id, id: product.id), class: 'btn btn-sm btn-danger', data: { confirm: "You are sure?" }, method: :delete
