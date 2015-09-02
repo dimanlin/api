@@ -8,6 +8,12 @@ Rails.application.routes.draw do
     resources :products
   end
 
+  namespace :api_v1 do
+    resources :catalogs do
+      resources :products
+    end
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
