@@ -42,7 +42,7 @@ RSpec.describe ApiV1::CatalogsController, type: :controller do
         post :update, id: @catalog.id, format: :json, catalog: {name: ''}
       end
 
-      it 'validation error for category name' do
+      it 'validation error for catalog name' do
         expect(JSON.parse(response.body)['name']).to eq('')
         expect(JSON.parse(response.body)['errors']).to eq({"name"=>["can't be blank"]})
       end
@@ -54,7 +54,7 @@ RSpec.describe ApiV1::CatalogsController, type: :controller do
         post :update, id: @catalog.id, format: :json, catalog: {name: 'new_name'}
       end
 
-      it 'update name of category' do
+      it 'update name of catalog' do
         expect(JSON.parse(response.body)['name']).to eq('new_name')
         expect(JSON.parse(response.body)['errors']).to eq({})
       end
@@ -79,7 +79,7 @@ RSpec.describe ApiV1::CatalogsController, type: :controller do
         post :create, format: :json, catalog: {name: 'new_name', description: 'new_description'}
       end
 
-      it 'create new category' do
+      it 'create new catalog' do
         expect(JSON.parse(response.body)['name']).to eq('new_name')
         expect(JSON.parse(response.body)['description']).to eq('new_description')
         expect(JSON.parse(response.body)['errors']).to eq({})

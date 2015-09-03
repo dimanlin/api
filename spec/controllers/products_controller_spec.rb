@@ -73,7 +73,7 @@ RSpec.describe ProductsController, type: :controller do
         post :update, catalog_id: @catalog.id, id: @product.id, product: {name: ''}
       end
 
-      it 'validation error for category name' do
+      it 'validation error for catalog name' do
         expect redirect_to catalog_products_path(catalog_id: @catalog.id)
       end
     end
@@ -85,7 +85,7 @@ RSpec.describe ProductsController, type: :controller do
         post :update, catalog_id: @catalog.id, id: @product.id, product: {name: 'new_name'}
       end
 
-      it 'update category name' do
+      it 'update catalog name' do
         expect render_template :edit
       end
     end
@@ -111,7 +111,7 @@ RSpec.describe ProductsController, type: :controller do
         post :create, catalog_id: @catalog.id, product: {name: 'new_name', description: 'new_description', price: '100.44'}
       end
 
-      it 'created new category' do
+      it 'created new catalog' do
         expect redirect_to catalog_products_path(catalog_id: @catalog.id)
       end
     end

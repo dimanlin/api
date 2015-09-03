@@ -19,7 +19,7 @@ RSpec.describe CatalogsController, type: :controller do
       @catalog = FactoryGirl.create(:catalog)
     end
 
-    it 'destroy category' do
+    it 'destroy catalog' do
       expect do
         post :destroy, id: @catalog.id
       end.to change{Catalog.count}.from(1).to(0)
@@ -37,7 +37,7 @@ RSpec.describe CatalogsController, type: :controller do
         post :update, id: @catalog.id, catalog: {name: ''}
       end
 
-      it 'invalid category name' do
+      it 'invalid catalog name' do
         expect render_template :edit
       end
     end
@@ -47,7 +47,7 @@ RSpec.describe CatalogsController, type: :controller do
         post :update, id: @catalog.id, catalog: {name: 'new_name'}
       end
 
-      it 'update name of category' do
+      it 'update name of catalog' do
         expect redirect_to catalogs_path
       end
     end
