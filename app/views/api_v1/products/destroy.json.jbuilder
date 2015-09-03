@@ -1,3 +1,1 @@
-json.product do
-  json.partial! partial: 'product', locals: {product: @product}
-end
+json.partial! partial: 'product', locals: {product: @product, without_errors: true}

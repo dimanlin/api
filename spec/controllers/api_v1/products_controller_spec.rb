@@ -4,15 +4,21 @@ RSpec.describe ApiV1::ProductsController, type: :controller do
   describe '.index' do
     before do
       @catalog = FactoryGirl.create(:catalog)
-      @product = FactoryGirl.create(:product, catalog_id: @catalog.id)
+      @product_1 = FactoryGirl.create(:product, catalog_id: @catalog.id)
+      @product_2 = FactoryGirl.create(:product, catalog_id: @catalog.id)
       get :index, format: :json, catalog_id: @catalog.id
     end
 
     it 'get categories' do
-      expect(JSON.parse(response.body)['products'].size).to eq(1)
-      expect(JSON.parse(response.body)['products'].first['name']).to eq(@product.name)
-      expect(JSON.parse(response.body)['products'].first['description']).to eq(@product.description)
-      expect(JSON.parse(response.body)['products'].first['price']).to eq(@product.price.to_s)
+      expect(JSON.parse(response.body).size).to eq(2)
+
+      expect(JSON.parse(response.body).first['name']).to eq(@product_1.name)
+      expect(JSON.parse(response.body).first['description']).to eq(@product_1.description)
+      expect(JSON.parse(response.body).first['price']).to eq(@product_1.price.to_s)
+
+      expect(JSON.parse(response.body).last['name']).to eq(@product_2.name)
+      expect(JSON.parse(response.body).last['description']).to eq(@product_2.description)
+      expect(JSON.parse(response.body).last['price']).to eq(@product_2.price.to_s)
     end
   end
 
@@ -26,8 +32,11 @@ RSpec.describe ApiV1::ProductsController, type: :controller do
       expect do
         post :destroy, catalog_id: @catalog.id, id: @product.id, format: :json
       end.to change{Product.count}.from(1).to(0)
-      expect(JSON.parse(response.body)['product']['name']).to eq(@product.name)
-      expect(JSON.parse(response.body)['product']['description']).to eq(@product.description)
+      expect(JSON.parse(response.body)['name']).to eq(@product.name)
+      expect(JSON.parse(response.body)['description']).to eq(@product.description)
+      expect(JSON.parse(response.body)['price']).to eq(@product.price.to_s)
+      expect(JSON.parse(response.body)['catalog_id']).to eq(@catalog_id)
+      expect(JSON.parse(response.body)['errors']).to eq({})
     end
   end
 
@@ -40,8 +49,11 @@ RSpec.describe ApiV1::ProductsController, type: :controller do
       end
 
       it 'validation error' do
-        expect(JSON.parse(response.body)['product']['name']).to eq('')
-        expect(JSON.parse(response.body)['product']['errors']).to eq({"name"=>["can't be blank"]})
+        expect(JSON.parse(response.body)['name']).to eq('')
+        expect(JSON.parse(response.body)['description']).to eq(@product.description)
+        expect(JSON.parse(response.body)['price']).to eq(@product.price.to_s)
+        expect(JSON.parse(response.body)['catalog_id']).to eq(@catalog_id)
+        expect(JSON.parse(response.body)['errors']).to eq({"name"=>["can't be blank"]})
       end
     end
 
@@ -53,8 +65,11 @@ RSpec.describe ApiV1::ProductsController, type: :controller do
       end
 
       it 'update product name' do
-        expect(JSON.parse(response.body)['product']['name']).to eq('new_name')
-        expect(JSON.parse(response.body)['product']['errors']).to eq({})
+        expect(JSON.parse(response.body)['name']).to eq('new_name')
+        expect(JSON.parse(response.body)['description']).to eq(@product.description)
+        expect(JSON.parse(response.body)['price']).to eq(@product.price.to_s)
+        expect(JSON.parse(response.body)['catalog_id']).to eq(@catalog_id)
+        expect(JSON.parse(response.body)['errors']).to eq({})
       end
     end
   end
@@ -68,9 +83,11 @@ RSpec.describe ApiV1::ProductsController, type: :controller do
       end
 
       it 'get validation errors' do
-        expect(JSON.parse(response.body)['product']['name']).to eq('')
-        expect(JSON.parse(response.body)['product']['description']).to eq('')
-        expect(JSON.parse(response.body)['product']['errors']).to eq({"name"=>["can't be blank"], "description"=>["can't be blank"], "price"=>["can't be blank"]})
+        expect(JSON.parse(response.body)['name']).to eq('')
+        expect(JSON.parse(response.body)['description']).to eq('')
+        expect(JSON.parse(response.body)['price']).to be nil
+        expect(JSON.parse(response.body)['catalog_id']).to eq(@catalog_id)
+        expect(JSON.parse(response.body)['errors']).to eq({"name"=>["can't be blank"], "description"=>["can't be blank"], "price"=>["can't be blank"]})
       end
     end
 
@@ -82,10 +99,10 @@ RSpec.describe ApiV1::ProductsController, type: :controller do
       end
 
       it 'created new product' do
-        expect(JSON.parse(response.body)['product']['name']).to eq('new_name')
-        expect(JSON.parse(response.body)['product']['description']).to eq('new_description')
-        expect(JSON.parse(response.body)['product']['price']).to eq('100.44')
-        expect(JSON.parse(response.body)['product']['errors']).to eq({})
+        expect(JSON.parse(response.body)['name']).to eq('new_name')
+        expect(JSON.parse(response.body)['description']).to eq('new_description')
+        expect(JSON.parse(response.body)['price']).to eq('100.44')
+        expect(JSON.parse(response.body)['errors']).to eq({})
       end
     end
   end

@@ -1,1 +1,1 @@
-json.products @products
+json.array! @products
