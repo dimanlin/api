@@ -7,8 +7,7 @@ class ProductsController < ApplicationController
   end
 
   def index
-    @catalog = Catalog.find(params[:catalog_id])
-    @products = @catalog.products
+    @catalog = Catalog.includes(:products).find(params[:catalog_id])
   end
 
   def show
