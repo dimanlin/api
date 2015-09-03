@@ -35,7 +35,7 @@ RSpec.describe ApiV1::CatalogsController, type: :controller do
         post :update, id: @catalog.id, format: :json, catalog: {name: ''}
       end
 
-      it 'destroy category' do
+      it 'validation error for category name' do
         expect(JSON.parse(response.body)['catalog']['name']).to eq('')
         expect(JSON.parse(response.body)['catalog']['errors']).to eq({"name"=>["can't be blank"]})
       end
@@ -47,7 +47,7 @@ RSpec.describe ApiV1::CatalogsController, type: :controller do
         post :update, id: @catalog.id, format: :json, catalog: {name: 'new_name'}
       end
 
-      it 'destroy category' do
+      it 'update name of category' do
         expect(JSON.parse(response.body)['catalog']['name']).to eq('new_name')
         expect(JSON.parse(response.body)['catalog']['errors']).to eq({})
       end
@@ -57,7 +57,6 @@ RSpec.describe ApiV1::CatalogsController, type: :controller do
   describe '.create' do
     context 'invalid' do
       before do
-        @catalog = FactoryGirl.create(:catalog)
         post :create, format: :json, catalog: {name: '', description: ''}
       end
 
@@ -70,11 +69,10 @@ RSpec.describe ApiV1::CatalogsController, type: :controller do
 
     context 'valid' do
       before do
-        @catalog = FactoryGirl.create(:catalog)
-        post :create, id: @catalog.id, format: :json, catalog: {name: 'new_name', description: 'new_description'}
+        post :create, format: :json, catalog: {name: 'new_name', description: 'new_description'}
       end
 
-      it 'destroy category' do
+      it 'create new category' do
         expect(JSON.parse(response.body)['catalog']['name']).to eq('new_name')
         expect(JSON.parse(response.body)['catalog']['description']).to eq('new_description')
         expect(JSON.parse(response.body)['catalog']['errors']).to eq({})

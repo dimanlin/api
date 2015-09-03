@@ -5,7 +5,7 @@ RSpec.describe ApiV1::ProductsController, type: :controller do
     before do
       @catalog = FactoryGirl.create(:catalog)
       @product = FactoryGirl.create(:product, catalog_id: @catalog.id)
-      get :index, format: :json, id: @product.id, catalog_id: @catalog.id
+      get :index, format: :json, catalog_id: @catalog.id
     end
 
     it 'get categories' do
@@ -39,7 +39,7 @@ RSpec.describe ApiV1::ProductsController, type: :controller do
         post :update, catalog_id: @catalog.id, id: @product.id, format: :json, product: {name: ''}
       end
 
-      it 'destroy category' do
+      it 'validation error' do
         expect(JSON.parse(response.body)['product']['name']).to eq('')
         expect(JSON.parse(response.body)['product']['errors']).to eq({"name"=>["can't be blank"]})
       end
@@ -52,7 +52,7 @@ RSpec.describe ApiV1::ProductsController, type: :controller do
         post :update, catalog_id: @catalog.id, id: @product.id, format: :json, product: {name: 'new_name'}
       end
 
-      it 'destroy category' do
+      it 'update product name' do
         expect(JSON.parse(response.body)['product']['name']).to eq('new_name')
         expect(JSON.parse(response.body)['product']['errors']).to eq({})
       end
@@ -78,10 +78,10 @@ RSpec.describe ApiV1::ProductsController, type: :controller do
       before do
         @catalog = FactoryGirl.create(:catalog)
         @product = FactoryGirl.create(:product, catalog_id: @catalog.id)
-        post :create, catalog_id: @catalog.id, id: @product.id, format: :json, product: {name: 'new_name', description: 'new_description', price: '100.44'}
+        post :create, catalog_id: @catalog.id, format: :json, product: {name: 'new_name', description: 'new_description', price: '100.44'}
       end
 
-      it 'destroy category' do
+      it 'created new product' do
         expect(JSON.parse(response.body)['product']['name']).to eq('new_name')
         expect(JSON.parse(response.body)['product']['description']).to eq('new_description')
         expect(JSON.parse(response.body)['product']['price']).to eq('100.44')
