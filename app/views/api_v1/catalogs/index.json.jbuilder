@@ -1,1 +1,1 @@
-json.catalogs @catalogs
+json.array! @catalogs

@@ -1,3 +1,1 @@
-json.catalog do
-  json.partial! partial: 'catalog', locals: {catalog: @catalog}
-end
+json.partial! partial: 'catalog', locals: {catalog: @catalog, without_errors: true}
