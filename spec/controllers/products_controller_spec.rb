@@ -47,7 +47,6 @@ RSpec.describe ProductsController, type: :controller do
 
     it 'get categories' do
       expect(assigns[:catalog]).to eq(@catalog)
-      expect(assigns[:products]).to include(@product)
     end
   end
 
